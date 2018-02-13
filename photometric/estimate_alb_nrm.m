@@ -28,14 +28,24 @@ normal = zeros(h, w, 3);
 %   solve scriptI * scriptV * g = scriptI * i to obtain g for this point
 %   albedo at this point is |g|
 %   normal at this point is g / |g|
-
-for row = 1:h
-    for col = 1:w
-        i = squeeze(image_stack(row, col, :));
-        scriptI = diag(i);
-        g = (scriptI * scriptV) \ (scriptI * i);
-        albedo(row, col, 1) =  norm(g);
-        normal(row, col, :) = g / norm(g);
+if shadow_trick
+    for row = 1:h
+        for col = 1:w
+            i = squeeze(image_stack(row, col, :));
+            scriptI = diag(i);
+            g = (scriptI * scriptV) \ (scriptI * i);
+            albedo(row, col, 1) =  norm(g);
+            normal(row, col, :) = g / norm(g);
+        end
+    end
+else
+    for row = 1:h
+        for col = 1:w
+            i = squeeze(image_stack(row, col, :));
+            g = scriptV \ i;
+            albedo(row, col, 1) =  norm(g);
+            normal(row, col, :) = g / norm(g);
+        end
     end
 end
 
