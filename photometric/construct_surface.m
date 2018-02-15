@@ -29,19 +29,24 @@ switch path_type
 
        
         % =================================================================
+        height_map = column_wise(p, q);
+            
                
     case 'row'
         
         % =================================================================
         % YOUR CODE GOES HERE
         
-
+        height_map = row_wise(p, q);
         % =================================================================
           
     case 'average'
         
         % =================================================================
         % YOUR CODE GOES HERE
+        height_map_row = row_wise(p, q);
+        height_map_column = column_wise(p, q);
+        height_map = (height_map_row + height_map_column) / 2;
 
         
         % =================================================================
@@ -49,4 +54,37 @@ end
 
 
 end
+
+function [height_map] = column_wise(p, q)
+    [h, w] = size(p);
+    height_map = zeros(h, w);
+    
+    height_map(1,1) = 0;
+    for column = 2:h
+       height_map(column,1) =  height_map(column-1,1) + q(column, 1);
+    end
+
+    for row = 1:w
+        for column = 2:h
+            height_map(column, row) = height_map(column-1, row) + p(column, row);
+        end
+    end
+end
+
+function [height_map] = row_wise(p, q)
+    [h, w] = size(p);
+    height_map = zeros(h, w);
+    
+    height_map(1,1) = 0;
+    for row = 2:w
+       height_map(1, row) =  height_map(1, row-1) + p(1, row);
+    end
+
+    for row = 2:w
+        for column = 1:h
+            height_map(column, row) = height_map(column, row-1) + q(column, row);
+        end
+    end
+end
+
 
