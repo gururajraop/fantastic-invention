@@ -30,7 +30,6 @@ switch path_type
        
         % =================================================================
         height_map = column_wise(p, q);
-            
                
     case 'row'
         
@@ -59,14 +58,14 @@ function [height_map] = column_wise(p, q)
     [h, w] = size(p);
     height_map = zeros(h, w);
     
-    height_map(1,1) = 0;
-    for column = 2:h
-       height_map(column,1) =  height_map(column-1,1) + q(column, 1);
+    height_map(1,1) = q(1,1);
+    for row = 2:h
+       height_map(row,1) =  height_map(row-1,1) + q(row, 1);
     end
 
-    for row = 1:w
-        for column = 2:h
-            height_map(column, row) = height_map(column-1, row) + p(column, row);
+    for row = 1:h
+        for column = 2:w
+            height_map(row, column) = height_map(row, column-1) + p(row, column);
         end
     end
 end
@@ -75,14 +74,14 @@ function [height_map] = row_wise(p, q)
     [h, w] = size(p);
     height_map = zeros(h, w);
     
-    height_map(1,1) = 0;
-    for row = 2:w
-       height_map(1, row) =  height_map(1, row-1) + p(1, row);
+    height_map(1,1) = p(1, 1);
+    for column = 2:w
+       height_map(1, column) =  height_map(1, column-1) + p(1, column);
     end
 
-    for row = 2:w
-        for column = 1:h
-            height_map(column, row) = height_map(column, row-1) + q(column, row);
+    for row = 2:h
+        for column = 1:w
+            height_map(row, column) = height_map(row-1, column) + q(row, column);
         end
     end
 end
