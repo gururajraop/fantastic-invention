@@ -36,17 +36,19 @@ q(isnan(q)) = 0;
 % approximate second derivate by neighbor difference
 % and compute the Squared Errors SE of the 2 second derivatives SE
 
-p_sec = diff(p);
-q_sec = diff(q);
+p_sec = diff(p,1,2);
+q_sec = diff(q,1,1);
+
+padding_x = size(normals, 1)
+padding_y = size(normals, 2)
+
+size(p_sec)
+size(q_sec)
+
+q_sec(padding_x,:)= zeros(1, padding_y);
+p_sec(:,padding_y)= zeros(padding_x, 1);
 
 SE = (p_sec - q_sec).^2;
-
-padding_x = size(normals, 1);
-padding_y = size(normals, 2);
-
-size(SE)
-SE(padding_x,:) = zeros(1, padding_y);
-size(SE)
 
 % ========================================================================
 
