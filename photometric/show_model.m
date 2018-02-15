@@ -10,7 +10,7 @@ function show_model(albedo, height_map)
 [hgt, wid] = size(height_map);
 [X,Y] = meshgrid(1:wid, 1:hgt);
 H = rot90(fliplr(height_map), 2);
-A = rot90(fliplr(albedo), 2);
+A = rot90(fliplr(squeeze(albedo)), 2);
 
 figure;
 mesh(H, X, Y, A);

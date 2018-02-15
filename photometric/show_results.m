@@ -11,7 +11,7 @@ surf(X, Y, SE, gradient(SE));
 title('Integrability check: (dp / dy - dq / dx) ^2 ');
 
 subplot(2, 3, 2);
-imshow(albedo);
+imshow(squeeze(albedo));
 title('Albedo');
 
 subplot(2, 3, 3);
