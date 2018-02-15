@@ -39,11 +39,8 @@ q(isnan(q)) = 0;
 p_sec = diff(p,1,2);
 q_sec = diff(q,1,1);
 
-padding_x = size(normals, 1)
-padding_y = size(normals, 2)
-
-size(p_sec)
-size(q_sec)
+padding_x = size(normals, 1);
+padding_y = size(normals, 2);
 
 q_sec(padding_x,:)= zeros(1, padding_y);
 p_sec(:,padding_y)= zeros(padding_x, 1);
@@ -51,8 +48,6 @@ p_sec(:,padding_y)= zeros(padding_x, 1);
 SE = (p_sec - q_sec).^2;
 
 % ========================================================================
-
-
 
 
 end
