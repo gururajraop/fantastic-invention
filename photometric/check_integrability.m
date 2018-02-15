@@ -6,15 +6,20 @@ function [ p, q, SE ] = check_integrability( normals )
 %   SE : Squared Errors of the 2 second derivatives
 
 % initalization
-p = zeros(size(normals));
-q = zeros(size(normals));
-SE = zeros(size(normals));
+p = zeros(size(normals, 1), size(normals, 2));
+q = zeros(size(normals, 1), size(normals, 2));
+SE = zeros(size(normals, 1), size(normals, 2));
+% q = zeros(size(normals));
+% SE = zeros(size(normals));
 
 % ========================================================================
 % YOUR CODE GOES HERE
 % Compute p and q, where
 % p measures value of df / dx
 % q measures value of df / dy
+
+p = normals(:,:,1) ./ normals(:,:,3);
+q = normals(:,:,2) ./ normals(:,:,3);
 
 
 % ========================================================================
@@ -31,6 +36,17 @@ q(isnan(q)) = 0;
 % approximate second derivate by neighbor difference
 % and compute the Squared Errors SE of the 2 second derivatives SE
 
+p_sec = diff(p);
+q_sec = diff(q);
+
+SE = (p_sec - q_sec).^2;
+
+padding_x = size(normals, 1);
+padding_y = size(normals, 2);
+
+size(SE)
+SE(padding_x,:) = zeros(1, padding_y);
+size(SE)
 
 % ========================================================================
 
@@ -38,4 +54,5 @@ q(isnan(q)) = 0;
 
 
 end
+
 
