@@ -45,7 +45,7 @@ switch path_type
         % YOUR CODE GOES HERE
         height_map_row = row_wise(p, q);
         height_map_column = column_wise(p, q);
-        height_map = (height_map_row + height_map_column) / 2;
+        height_map = (abs(height_map_row) + abs(height_map_column)) / 2;
 
         
         % =================================================================
@@ -58,7 +58,7 @@ function [height_map] = column_wise(p, q)
     [h, w] = size(p);
     height_map = zeros(h, w);
     
-    height_map(1,1) = q(1,1);
+    height_map(1,1) = 0;
     for row = 2:h
        height_map(row,1) =  height_map(row-1,1) + q(row, 1);
     end
@@ -74,7 +74,7 @@ function [height_map] = row_wise(p, q)
     [h, w] = size(p);
     height_map = zeros(h, w);
     
-    height_map(1,1) = p(1, 1);
+    height_map(1,1) = 0;
     for column = 2:w
        height_map(1, column) =  height_map(1, column-1) + p(1, column);
     end

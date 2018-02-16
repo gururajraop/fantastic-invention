@@ -28,7 +28,9 @@ if shadow_trick
                 scriptI = diag(i);
                 g = (scriptI * scriptV) \ (scriptI * i);
                 albedo(row, col, 1, channel) =  norm(g);
-                normal(row, col, :) = squeeze(normal(row, col, :)) + squeeze(g / norm(g));
+                if norm(g) ~= 0
+                    normal(row, col, :) = squeeze(normal(row, col, :)) + squeeze(g / norm(g));
+                end
             end
         end
     end
@@ -39,7 +41,9 @@ else
                 i = squeeze(image_stack(row, col, :, channel));
                 g = scriptV \ i;
                 albedo(row, col, 1, channel) =  norm(g);
-                normal(row, col, :) = squeeze(normal(row, col, :)) + squeeze(g / norm(g));
+                if norm(g) ~= 0
+                    normal(row, col, :) = squeeze(normal(row, col, :)) + squeeze(g / norm(g));
+                end
             end
         end
     end
