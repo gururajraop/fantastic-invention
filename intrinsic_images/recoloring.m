@@ -1,17 +1,24 @@
 function [] = recoloring()
-    reflectance = im2double(imread('ball_reflectance.png'));
+    
+    % Load the images into memory, convert to doubles
     shading = im2double(imread('ball_shading.png'));
     original = imread('ball.png');
     
-    reconstructed_green = zeros(size(reflectance));
-    reconstructed_magenta = zeros(size(reflectance));
+    % preallocate memory for reconstruction of the images
+    reconstructed_green = zeros(size(original));
+    reconstructed_magenta = zeros(size(original));
     
-    reconstructed_green(:,:,2) = shading(:,:) .* 1;
+    % instead of albedo use predefined colours
+    green = [0, 1, 0];
+    magenta = [1, 0, 1];
     
-    reconstructed_magenta(:,:,1) = shading(:,:) .* 1;
-    reconstructed_magenta(:,:,3) = shading(:,:) .* 1;
+    % calculate pixel intensity foreach channel
+    for c = 1:3
+        reconstructed_green(:,:,c) = shading(:,:) .* green(c);
+        reconstructed_magenta(:,:,c) = shading(:,:) .* magenta(c);        
+    end
     
-    
+    % plot original and the two recolored images in one figure
     close all
     figure
     subplot(1, 3, 1);
