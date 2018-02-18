@@ -20,6 +20,10 @@ function [] = iid_image_formation()
     imshow(original);
     title('Original image');
     
+    % True material color (center/center pixel) but unifomity is ensured
+    rgb = reflectance(133, 240, :) * 255;
+    disp(rgb)
+    
     subplot(2, 2, 2);
     imshow(reconstructed);
     title('Reconstructed image');
