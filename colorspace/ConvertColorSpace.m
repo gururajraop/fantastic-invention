@@ -18,20 +18,20 @@ function [new_image] = ConvertColorSpace(input_image, colorspace)
 input_image = im2double(input_image);
 
 if strcmp(colorspace, 'opponent')
-    new_image = rgb2opponent(input_image); % fill in this function
+    new_image = rgb2opponent(input_image);
     titles = ["Opponent color space", "Opponent1", "Opponent2", "Opponent3"];
 elseif strcmp(colorspace, 'rgb')  
-    new_image = rgb2normedrgb(input_image); % fill in this function
-    titles = ["Normed RGB", "Normed Red", "Normed Green", "Normed Blue"];
+    new_image = rgb2normedrgb(input_image);
+    titles = ["Normalized RGB", "Normalized Red", "Normalized Green", "Normalized Blue"];
 elseif strcmp(colorspace, 'hsv')
-    % use the built-in function
+    new_image = rgb2hsv(input_image);
     titles = ["HSV color space", "Hue", "Saturation", "Value"];
 elseif strcmp(colorspace, 'ycbcr')
-    % use the built-in function
-    titles = ["YCbCr color space", "Yellow", "Luminance", "Blue chroma", "Red chroma"];
+    new_image = rgb2ycbcr(input_image);
+    titles = ["YCbCr color space", "Luminance", "Blue chroma", "Red chroma"];
 elseif strcmp(colorspace, 'gray')
-    new_image = rgb2grays(input_image); % fill in this function
-    titles = ["Grayscale output", "Gray(R)", "Gray(G)", "Gray(B)"];
+    new_image = rgb2grays(input_image);
+    titles = ["MatLab-Builtin", "Lightness", "Average", "Luminosity"];
 else
 % if user inputs an unknow colorspace just notify and do not plot anything
     fprintf('Error: Unknown colorspace type [%s]...\n',colorspace);

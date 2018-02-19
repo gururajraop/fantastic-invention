@@ -4,7 +4,11 @@ figure
 
 % The output image
 subplot(2,2,1);
-imshow(input_image);
+if strcmp(color_space(1, 1), 'MatLab-Builtin')
+    imshow(input_image(:, :, 4));
+else
+    imshow(input_image);
+end
 title(color_space(1, 1));
 
 subplot(2,2,2);
