@@ -1,7 +1,7 @@
 function [] = AWB()
     %%
     % load image into memory and preallocate space for corrected version
-    original = im2double(imread('awb.jpg'));
+    original = im2double(imread('blue.jpg'));
     corrected = zeros(size(original));
 
     % calculate mean RGB color and illumination
