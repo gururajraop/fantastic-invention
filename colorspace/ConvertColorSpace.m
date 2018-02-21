@@ -19,7 +19,7 @@ input_image = im2double(input_image);
 
 if strcmp(colorspace, 'opponent')
     new_image = rgb2opponent(input_image);
-    titles = ["Opponent color space", "Opponent1", "Opponent2", "Opponent3"];
+    titles = ["Opponent color space", "Red-Green comparison", "Blue-Yellow comparison", "Intensity"];
 elseif strcmp(colorspace, 'rgb')  
     new_image = rgb2normedrgb(input_image);
     titles = ["Normalized RGB", "Normalized Red", "Normalized Green", "Normalized Blue"];
@@ -39,6 +39,6 @@ else
     return;
 end
 
-visualize(new_image, titles); % fill in this function
+visualize(new_image, titles);
 
 end
