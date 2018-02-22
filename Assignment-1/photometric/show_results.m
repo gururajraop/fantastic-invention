@@ -2,10 +2,6 @@ function show_results( albedo, normals, SE )
 %SHOW_RESULTS display albedo, normal and computational errors
 
 [h, w, ~] = size(normals);
-minN = min(min(normals, [], 1), [], 2);
-maxN = max(max(normals, [], 1), [], 2);
-normal_img = (normals - minN) ./ (maxN - minN);
-imshow(normal_img)
 
 % plot the results
 figure

@@ -36,9 +36,9 @@ function [ albedo, normal ] = estimate_alb_nrm( image_stack, scriptV, shadow_tri
 
                 % calculate norm and albedo
                 albedo(row, col, channel) =  norm(g);
-%                 if norm(g) ~= 0
+                if norm(g) ~= 0
                     normal(row, col, :) = squeeze(normal(row, col, :)) + squeeze(g / norm(g));
-%                 end
+                end
             end
         end
     end
