@@ -2,4 +2,6 @@ clear
 clc
 close all
 
-disp(gauss1D(2, 5));
+G1 = gauss1D(2, 5);
+
+G2 = gauss2D(2, 5);
