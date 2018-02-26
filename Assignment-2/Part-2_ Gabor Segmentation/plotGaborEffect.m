@@ -7,24 +7,23 @@ function [] = plotGaborEffect(sigmas, thetas, gammas)
     
     figure;
     subplot(5,2,1), imshow(G1(:,:,1));
-    title(['Gabor Real: sigma=', num2str(sigmas(1)), ', theta=', num2str(thetas(1)), ', gamma=', num2str(gammas(1))]);
+    title(['\sigma=', num2str(sigmas(1)), ', \theta=', num2str(thetas(1)), ', \gamma=', num2str(gammas(1))]);
     subplot(5,2,2), imshow(G1(:,:,2));
-    title(['Gabor Imaginary: sigma=', num2str(sigmas(1)), ', theta=', num2str(thetas(1)), ', gamma=', num2str(gammas(1))]);
+    title(['Imaginary: \sigma=', num2str(sigmas(1)), ', \theta=', num2str(thetas(1)), ', \gamma=', num2str(gammas(1))]);
     subplot(5,2,3), imshow(G2(:,:,1));
-    title(['Gabor Real: sigma=', num2str(sigmas(2)), ', theta=', num2str(thetas(2)), ', gamma=', num2str(gammas(2))]);
+    title(['Real: \sigma=', num2str(sigmas(2)), ', \theta=', num2str(thetas(2)), ', \gamma=', num2str(gammas(2))]);
     subplot(5,2,4), imshow(G2(:,:,2));
-    title(['Gabor Imaginary: sigma=', num2str(sigmas(2)), ', theta=', num2str(thetas(2)), ', gamma=', num2str(gammas(2))]);
+    title(['Imaginary: \sigma=', num2str(sigmas(2)), ', \theta=', num2str(thetas(2)), ', \gamma=', num2str(gammas(2))]);
     subplot(5,2,5), imshow(G3(:,:,1));
-    title(['Gabor Real: sigma=', num2str(sigmas(3)), ', theta=', num2str(thetas(3)), ', gamma=', num2str(gammas(3))]);
+    title(['Real: \sigma=', num2str(sigmas(3)), ', \theta=', num2str(thetas(3)), ', \gamma=', num2str(gammas(3))]);
     subplot(5,2,6), imshow(G3(:,:,2));
-    title(['Gabor Imaginary: sigma=', num2str(sigmas(3)), ', theta=', num2str(thetas(3)), ', gamma=', num2str(gammas(3))]);
+    title(['Imaginary: \sigma=', num2str(sigmas(3)), ', \theta=', num2str(thetas(3)), ', \gamma=', num2str(gammas(3))]);
     subplot(5,2,7), imshow(G4(:,:,1));
-    title(['Gabor Real: sigma=', num2str(sigmas(4)), ', theta=', num2str(thetas(4)), ', gamma=', num2str(gammas(4))]);
+    title(['Real: \sigma=', num2str(sigmas(4)), ', \theta=', num2str(thetas(4)), ', \gamma=', num2str(gammas(4))]);
     subplot(5,2,8), imshow(G4(:,:,2));
-    title(['Gabor Imaginary: sigma=', num2str(sigmas(4)), ', theta=', num2str(thetas(4)), ', gamma=', num2str(gammas(4))]);
+    title(['Imaginary: \sigma=', num2str(sigmas(4)), ', \theta=', num2str(thetas(4)), ', \gamma=', num2str(gammas(4))]);
     subplot(5,2,9), imshow(G5(:,:,1));
-    title(['Gabor Real: sigma=', num2str(sigmas(5)), ', theta=', num2str(thetas(5)), ', gamma=', num2str(gammas(5))]);
+    title(['Real: \sigma=', num2str(sigmas(5)), ', \theta=', num2str(thetas(5)), ', \gamma=', num2str(gammas(5))]);
     subplot(5,2,10), imshow(G5(:,:,2));
-    title(['Gabor Imaginary: sigma=', num2str(sigmas(5)), ', theta=', num2str(thetas(5)), ', gamma=', num2str(gammas(5))]);
-    
+    title(['Imaginary: \sigma=', num2str(sigmas(5)), ', \theta=', num2str(thetas(5)), ', \gamma=', num2str(gammas(5))]);
 end
