@@ -7,7 +7,7 @@ function [] = plotGaborEffect(sigmas, thetas, gammas)
     
     figure;
     subplot(5,2,1), imshow(G1(:,:,1));
-    title(['\sigma=', num2str(sigmas(1)), ', \theta=', num2str(thetas(1)), ', \gamma=', num2str(gammas(1))]);
+    title(['Real: \sigma=', num2str(sigmas(1)), ', \theta=', num2str(thetas(1)), ', \gamma=', num2str(gammas(1))]);
     subplot(5,2,2), imshow(G1(:,:,2));
     title(['Imaginary: \sigma=', num2str(sigmas(1)), ', \theta=', num2str(thetas(1)), ', \gamma=', num2str(gammas(1))]);
     subplot(5,2,3), imshow(G2(:,:,1));
