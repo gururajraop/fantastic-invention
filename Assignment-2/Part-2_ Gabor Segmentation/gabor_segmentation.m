@@ -133,8 +133,10 @@ fprintf('--------------------------------------\n')
 %            explain what works better and why shortly in the report.
 featureMaps = cell(length(gaborFilterBank),1);
 for jj = 1 : length(gaborFilterBank)
-    real_out =  imfilter(img_gray, gaborFilterBank(jj).filterPairs(:,:,1), 'conv'); % \\TODO: filter the grayscale input with real part of the Gabor
-    imag_out =  imfilter(img_gray, gaborFilterBank(jj).filterPairs(:,:,2), 'conv'); % \\TODO: filter the grayscale input with imaginary part of the Gabor
+%     real_out =  imfilter(img_gray, gaborFilterBank(jj).filterPairs(:,:,1), 'conv'); % \\TODO: filter the grayscale input with real part of the Gabor
+%     imag_out =  imfilter(img_gray, gaborFilterBank(jj).filterPairs(:,:,2), 'conv'); % \\TODO: filter the grayscale input with imaginary part of the Gabor
+    real_out = conv2(img_gray, gaborFilterBank(jj).filterPairs(:,:,1), 'same');
+    imag_out = conv2(img_gray, gaborFilterBank(jj).filterPairs(:,:,2), 'same');
     featureMaps{jj} = cat(3, real_out, imag_out);
     
     % Visualize the filter responses if you wish.
@@ -230,7 +232,8 @@ imshow(feature2DImage,[]), title('Pixel representation projected onto first PC')
 % \\ Hint-2: use the parameter k defined in the first section when calling
 %            MATLAB's built-in kmeans function.
 tic
-pixLabels = kmeans(feature2DImage(:), k); % \\TODO: Return cluster labels per pixel
+% pixLabels = kmeans(feature2DImage(:), k);
+pixLabels = kmeans(features, k); % \\TODO: Return cluster labels per pixel
 ctime = toc;
 fprintf('Clustering completed in %.3f seconds.\n', ctime);
 
