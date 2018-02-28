@@ -17,7 +17,7 @@ imshow(Gy)
 title('Directional gradient: Y axis')
 
 subplot(2, 2, 3);
-imshow(Gmag)
+imshow(Gmag, [])
 title('Gradient magnitude')
 
 subplot(2, 2, 4);
