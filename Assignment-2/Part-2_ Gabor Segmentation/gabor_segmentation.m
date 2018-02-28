@@ -5,7 +5,7 @@ close all
 %% Hyperparameters
 k        = 2;      % number of clusters in k-means algorithm. By default, 
                    % we consider k to be 2 in foreground-background segmentation task.
-image_id = 'SciencePark'; % Identifier to switch between input images.
+image_id = 'Robin-1'; % Identifier to switch between input images.
                    % Possible ids: 'Kobi',    'Polar', 'Robin-1'
                    %               'Robin-2', 'Cows',  'SciencePark'
 
@@ -77,7 +77,7 @@ img      = imresize(img,resize_factor);
 img_gray = double(rgb2gray(img));
 
 % Display image
-% figure(1), imshow(img), title(sprintf('Input image: %s', image_id));
+figure(1), imshow(img), title(sprintf('Input image: %s', image_id));
 
 %% Design array of Gabor Filters
 % In this code section, you will create a Gabor Filterbank. A filterbank is
@@ -242,12 +242,7 @@ end
 % [numRows, numCols, numFilters] into a matrix of size [numRows*numCols, numFilters]
 % This will constitute our data matrix which represents each pixel in the 
 % input image with numFilters features.
-% X = 1:numCols;
-% Y = 1:numRows;
-% [X,Y] = meshgrid(X,Y);
-% featureSet = cat(3,features,X);
-% featureSet = cat(3,featureSet,Y);
-% features = reshape(featureSet, numRows * numCols, []);
+
 features = reshape(features, numRows * numCols, []);
 
 
@@ -259,15 +254,14 @@ features = reshape(features, numRows * numCols, []);
 %          ii) Return the standardized data matrix.
 features = (features - mean(features));
 features = features ./  std(features);
-% features = (features - mean(features)) ./  std(features);
 
 % (Optional) Visualize the saliency map using the first principal component 
 % of the features matrix. It will be useful to diagnose possible problems 
 % with the pipeline and filterbank.  
 coeff = pca(features);
 feature2DImage = reshape(features*coeff(:,1),numRows,numCols);
-% figure(4)
-% imshow(feature2DImage,[]), title('Pixel representation projected onto first PC')
+figure(4)
+imshow(feature2DImage,[]), title('Pixel representation projected onto first PC')
 
 
 % Apply k-means algorithm to cluster pixels using the data matrix,
@@ -287,8 +281,8 @@ fprintf('Clustering completed in %.3f seconds.\n', ctime);
 % input size [numRows numCols].
 pixLabels = reshape(pixLabels,[numRows numCols]);
 
-% figure(5)
-% imshow(label2rgb(pixLabels)), title('Pixel clusters');
+figure(5)
+imshow(label2rgb(pixLabels)), title('Pixel clusters');
 
 
 
