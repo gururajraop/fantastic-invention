@@ -5,7 +5,7 @@ close all
 %% Hyperparameters
 k        = 2;      % number of clusters in k-means algorithm. By default, 
                    % we consider k to be 2 in foreground-background segmentation task.
-image_id = 'Kobi'; % Identifier to switch between input images.
+image_id = 'SciencePark'; % Identifier to switch between input images.
                    % Possible ids: 'Kobi',    'Polar', 'Robin-1'
                    %               'Robin-2', 'Cows',  'SciencePark'
 
@@ -21,27 +21,31 @@ switch image_id
     case 'Kobi'
         img = imread('kobi.png');
         resize_factor = 0.25;
-        smoothing_factor = 0.3;
-        sigmas = [1,2];
+        wavelength_factor = 8;
+        smoothing_factor = 0.5;
+        sigmas = [28];
         dTheta = pi/8;
         orientations = 0:dTheta:(3*pi/4); 
     case 'Polar'
         img = imread('./data/polar-bear-hiding.jpg');
         resize_factor = 0.75;
-        smoothing_factor = 3;
+        wavelength_factor = 4;
+        smoothing_factor = 0.5;
         sigmas = [1,2];
         dTheta = pi/4;
         orientations = 0:dTheta:(3*pi/4); 
     case 'Robin-1'
         img = imread('./data/robin-1.jpg');
         resize_factor = 1;
-        smoothing_factor = 3;
+        wavelength_factor = 4;
+        smoothing_factor = 1;
         sigmas = [1,2];
         dTheta = pi/8;
         orientations = 0:dTheta:(7*pi/8); 
     case 'Robin-2'
         img = imread('./data/robin-2.jpg');
         resize_factor = 0.5;
+        wavelength_factor = 4;
         smoothing_factor = 0.5;
         sigmas = [1,2];
         dTheta = pi/8;
@@ -49,16 +53,18 @@ switch image_id
     case 'Cows'
         img = imread('./data/cows.jpg');
         resize_factor = 0.5;
-        smoothing_factor = 3;
-        sigmas = [1,2];
+        wavelength_factor = 4;
+        smoothing_factor = 0.3;
+        sigmas = [4,10];
         dTheta = pi/4;
         orientations = 0:dTheta:(3*pi/4); 
     case 'SciencePark'
         img = imread('./data/sciencepark.jpg');
         img = permute(img,[2,1,3]);
         resize_factor = 0.2;
-        smoothing_factor = 0.5;
-        sigmas = [1,2];
+        wavelength_factor = 4;
+        smoothing_factor = 0.2;
+        sigmas = [2, 0.2, 0.02];
         dTheta = pi/8;
         orientations = 0:dTheta:(7*pi/8); 
         
@@ -85,17 +91,18 @@ img_gray = double(rgb2gray(img));
 % Estimate the minimum and maximum of the wavelengths for the sinusoidal
 % carriers. 
 % ** This step is pretty much standard, therefore, you don't have to
-%    worry about it. It is cycles in pixels. **   
-lambdaMin = 4/sqrt(2);
+%    worry about it. It is cycles in pixels. **
+% wavelength_factor = 4;
+lambdaMin = wavelength_factor/sqrt(2);
 lambdaMax = hypot(numRows,numCols);
 
 % Specify the carrier wavelengths.  
 % (or the central frequency of the carrier signal, which is 1/lambda)
 n = floor(log2(lambdaMax/lambdaMin));
-lambdas = 2.^(0:(n-2)) * lambdaMin;
+lambdas = 2.^(0:(n-2)) * lambdaMin; 
 
 % Define the set of orientations for the Gaussian envelope.
-% dTheta      = pi/4;                  % \\ the step size
+% dTheta      = 2*pi/8;                  % \\ the step size
 % orientations = 0:dTheta:(pi/2);       
 
 % Define the set of sigmas for the Gaussian envelope. Sigma here defines 
@@ -220,7 +227,7 @@ if smoothingFlag
     %END_FOR
     for jj = 1:length(featureMags)
         sigma_jj = smoothing_factor * gaborFilterBank(jj).lambda;
-        features(:,:,jj) = imgaussfilt(featureMags{jj}, sigma_jj);
+        features(:,:,jj) = imgaussfilt(featureMags{jj}, sigma_jj, 'Padding', 'symmetric');
     end
 else
     % Don't smooth but just insert magnitude images into the matrix
@@ -252,6 +259,7 @@ features = reshape(features, numRows * numCols, []);
 %          ii) Return the standardized data matrix.
 features = (features - mean(features));
 features = features ./  std(features);
+% features = (features - mean(features)) ./  std(features);
 
 % (Optional) Visualize the saliency map using the first principal component 
 % of the features matrix. It will be useful to diagnose possible problems 
@@ -269,7 +277,7 @@ feature2DImage = reshape(features*coeff(:,1),numRows,numCols);
 %            MATLAB's built-in kmeans function.
 tic
 % pixLabels = kmeans(feature2DImage(:), k);
-pixLabels = kmeans(features, k, 'Replicates', 10); % \\TODO: Return cluster labels per pixel
+pixLabels = kmeans(features, k, 'Replicates', 5); % \\TODO: Return cluster labels per pixel
 ctime = toc;
 fprintf('Clustering completed in %.3f seconds.\n', ctime);
 
