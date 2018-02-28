@@ -1,9 +1,13 @@
+clear
+clc
+close all
+
 %% Hyperparameters
 k        = 2;      % number of clusters in k-means algorithm. By default, 
                    % we consider k to be 2 in foreground-background segmentation task.
 image_id = 'Kobi'; % Identifier to switch between input images.
                    % Possible ids: 'Kobi',    'Polar', 'Robin-1'
-                   %               'Robin-2', 'Cows'
+                   %               'Robin-2', 'Cows',  'SciencePark'
 
 % Misc
 err_msg  = 'Image not available.';
@@ -17,22 +21,46 @@ switch image_id
     case 'Kobi'
         img = imread('kobi.png');
         resize_factor = 0.25;
+        smoothing_factor = 0.3;
+        sigmas = [1,2];
+        dTheta = pi/8;
+        orientations = 0:dTheta:(3*pi/4); 
     case 'Polar'
         img = imread('./data/polar-bear-hiding.jpg');
         resize_factor = 0.75;
+        smoothing_factor = 3;
+        sigmas = [1,2];
+        dTheta = pi/4;
+        orientations = 0:dTheta:(3*pi/4); 
     case 'Robin-1'
         img = imread('./data/robin-1.jpg');
         resize_factor = 1;
+        smoothing_factor = 3;
+        sigmas = [1,2];
+        dTheta = pi/8;
+        orientations = 0:dTheta:(7*pi/8); 
     case 'Robin-2'
         img = imread('./data/robin-2.jpg');
         resize_factor = 0.5;
+        smoothing_factor = 0.5;
+        sigmas = [1,2];
+        dTheta = pi/8;
+        orientations = 0:dTheta:(7*pi/8); 
     case 'Cows'
         img = imread('./data/cows.jpg');
         resize_factor = 0.5;
+        smoothing_factor = 3;
+        sigmas = [1,2];
+        dTheta = pi/4;
+        orientations = 0:dTheta:(3*pi/4); 
     case 'SciencePark'
         img = imread('./data/sciencepark.jpg');
         img = permute(img,[2,1,3]);
-        resize_factor = 0.2;      
+        resize_factor = 0.2;
+        smoothing_factor = 0.5;
+        sigmas = [1,2];
+        dTheta = pi/8;
+        orientations = 0:dTheta:(7*pi/8); 
         
     otherwise
         error(err_msg)
@@ -40,10 +68,10 @@ end
 
 % Image adjustments
 img      = imresize(img,resize_factor);
-img_gray = rgb2gray(img);
+img_gray = double(rgb2gray(img));
 
 % Display image
-figure(1), imshow(img), title(sprintf('Input image: %s', image_id));
+% figure(1), imshow(img), title(sprintf('Input image: %s', image_id));
 
 %% Design array of Gabor Filters
 % In this code section, you will create a Gabor Filterbank. A filterbank is
@@ -67,12 +95,12 @@ n = floor(log2(lambdaMax/lambdaMin));
 lambdas = 2.^(0:(n-2)) * lambdaMin;
 
 % Define the set of orientations for the Gaussian envelope.
-dTheta      = 2*pi/8;                  % \\ the step size
-orientations = 0:dTheta:(pi/2);       
+% dTheta      = pi/4;                  % \\ the step size
+% orientations = 0:dTheta:(pi/2);       
 
 % Define the set of sigmas for the Gaussian envelope. Sigma here defines 
 % the standard deviation, or the spread of the Gaussian. 
-sigmas = [1,2]; 
+% sigmas = [1,2]; 
 
 % Now you can create the filterbank. We provide you with a MATLAB struct
 % called gaborFilterBank in which we will hold the filters and their
@@ -160,7 +188,7 @@ featureMags =  cell(length(gaborFilterBank),1);
 for jj = 1:length(featureMaps)
     real_part = featureMaps{jj}(:,:,1);
     imag_part = featureMaps{jj}(:,:,2);
-    featureMags{jj} = sqrt(double(real_part .^ 2) + double(imag_part .^ 2)); % \\TODO: Compute the magnitude here
+    featureMags{jj} = sqrt((real_part .^ 2) + (imag_part .^ 2)); % \\TODO: Compute the magnitude here
     
     % Visualize the magnitude response if you wish.
     if visFlag
@@ -191,7 +219,8 @@ if smoothingFlag
         % ii) insert the smoothed image into features(:,:,jj)
     %END_FOR
     for jj = 1:length(featureMags)
-        features(:,:,jj) = imgaussfilt(featureMags{jj}, 2);
+        sigma_jj = smoothing_factor * gaborFilterBank(jj).lambda;
+        features(:,:,jj) = imgaussfilt(featureMags{jj}, sigma_jj);
     end
 else
     % Don't smooth but just insert magnitude images into the matrix
@@ -205,7 +234,13 @@ end
 % Reshape the filter outputs (i.e. tensor called features) of size 
 % [numRows, numCols, numFilters] into a matrix of size [numRows*numCols, numFilters]
 % This will constitute our data matrix which represents each pixel in the 
-% input image with numFilters features.  
+% input image with numFilters features.
+% X = 1:numCols;
+% Y = 1:numRows;
+% [X,Y] = meshgrid(X,Y);
+% featureSet = cat(3,features,X);
+% featureSet = cat(3,featureSet,Y);
+% features = reshape(featureSet, numRows * numCols, []);
 features = reshape(features, numRows * numCols, []);
 
 
@@ -215,15 +250,16 @@ features = reshape(features, numRows * numCols, []);
 
 % \\ TODO: i)  Implement standardization on matrix called features. 
 %          ii) Return the standardized data matrix.
-features = (features - mean(features, 2)) ./  std(features, [], 2);
+features = (features - mean(features));
+features = features ./  std(features);
 
 % (Optional) Visualize the saliency map using the first principal component 
 % of the features matrix. It will be useful to diagnose possible problems 
 % with the pipeline and filterbank.  
 coeff = pca(features);
 feature2DImage = reshape(features*coeff(:,1),numRows,numCols);
-figure(4)
-imshow(feature2DImage,[]), title('Pixel representation projected onto first PC')
+% figure(4)
+% imshow(feature2DImage,[]), title('Pixel representation projected onto first PC')
 
 
 % Apply k-means algorithm to cluster pixels using the data matrix,
@@ -233,7 +269,7 @@ imshow(feature2DImage,[]), title('Pixel representation projected onto first PC')
 %            MATLAB's built-in kmeans function.
 tic
 % pixLabels = kmeans(feature2DImage(:), k);
-pixLabels = kmeans(features, k); % \\TODO: Return cluster labels per pixel
+pixLabels = kmeans(features, k, 'Replicates', 10); % \\TODO: Return cluster labels per pixel
 ctime = toc;
 fprintf('Clustering completed in %.3f seconds.\n', ctime);
 
@@ -243,8 +279,8 @@ fprintf('Clustering completed in %.3f seconds.\n', ctime);
 % input size [numRows numCols].
 pixLabels = reshape(pixLabels,[numRows numCols]);
 
-figure(5)
-imshow(label2rgb(pixLabels)), title('Pixel clusters');
+% figure(5)
+% imshow(label2rgb(pixLabels)), title('Pixel clusters');
 
 
 
