@@ -2,15 +2,17 @@ function [] = harris_corner()
 % Demo function for Harris Corner detection algorithm
 
 %% Control settings
-image_id = 'pingpong';    % Image IDs to switch between input test images
+image_id = 'pingpong';      % Image IDs to switch between input test images
                             % Options: 'person_toy' and 'pingpong'
                             
 Gd_type = 'matlab';         % Type of the gaussian derivative function to be used
                             % Options: 'sobel' and 'matlab'
                             
-threshold = 0.025;           % User defined threshold for corner point selection
+threshold = 0.025;          % User defined threshold for corner point selection
 
 n = 5;                      % Neighboring window
+
+rotate = true;              % Rotate the input image
 
 %% Read input image
 switch image_id
@@ -21,8 +23,12 @@ switch image_id
         image = imread('./pingpong/0000.jpeg');
 end
 
+if rotate
+    image = imrotate(image, randi([0, 360]));
+end
+
 % Display input test image
-% figure(1), imshow(image); title('Harris Corner input image');
+figure(1), imshow(image); title('Harris Corner input image');
 
 %% Apply Harris Corner Detector Algorithm 
 imgray = im2double(rgb2gray(image));
