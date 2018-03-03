@@ -3,7 +3,7 @@ clc
 close all
 
 % Harris-Corner Detector
-harris_corner_detector();
+harris_corner();
 
 % Optical Flow with Lucas-Kanade Algorithm
 [v1, v2] = lucas_kanade('sphere1.ppm', 'sphere2.ppm');
