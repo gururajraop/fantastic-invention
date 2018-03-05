@@ -13,5 +13,5 @@ close all
 % 
 % % Feature Tracking
 % uncomment line below for demo
-% tracking('person_toy');
-% tracking('pingpong');
+tracking('person_toy');
+tracking('pingpong');
