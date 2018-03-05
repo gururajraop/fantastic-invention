@@ -1,9 +1,6 @@
-function [u, v] = lucas_kanade(im1, im2, fancyplot)
+function [u, v] = lucas_kanade(im1, im2, region_s, fancyplot)
     %% 
-    % Define variables
-    region_s = 15;
-    
-    if nargin == 2
+    if nargin == 3
         fancyplot = true;
     end
 
@@ -34,8 +31,8 @@ function [u, v] = lucas_kanade(im1, im2, fancyplot)
     regions_h = floor(h/region_s);
     regions_w = floor(w/region_s);
     
-    max_w = regions_h*region_s;
-    max_h = regions_w*region_s;
+    max_w = regions_w*region_s;
+    max_h = regions_h*region_s;
     
     im1 = im1(1:max_h, 1:max_w);
     im2 = im2(1:max_h, 1:max_w);
@@ -105,8 +102,8 @@ function [] = fancy_plot(u, v, im_org1, im_org2, region_s, max_h, max_w, less_co
     figure;
     p = gca;
     
-    [x, y] = meshgrid(region_s/2:region_s:max_h, region_s/2:region_s:max_w);
-    [X, Y] = meshgrid(0:region_s:max_h, 0:region_s:max_w);
+    [x, y] = meshgrid(region_s/2:region_s:max_w, region_s/2:region_s:max_h);
+    [X, Y] = meshgrid(0:region_s:max_w, 0:region_s:max_h);
     
     first_img = true;
     while ishghandle(p)     

@@ -24,9 +24,9 @@ switch Gd_type
 end
 
 % Plot the smoothed derivatives
-figure(2); 
-subplot(1,2,1), imshow(Ix, []); title('Image derivative Ix');
-subplot(1,2,2), imshow(Iy, []); title('Image derivative Iy');
+% figure(2); 
+% subplot(1,2,1), imshow(Ix, []); title('Image derivative Ix');
+% subplot(1,2,2), imshow(Iy, []); title('Image derivative Iy');
 
 %% Compute the Q matrix elements
 A = imgaussfilt((Ix .* Ix), sigma, 'FilterSize', 9, 'Padding', 'symmetric');
