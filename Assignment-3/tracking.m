@@ -29,7 +29,13 @@ function [] = tracking(input, correction)
     
     %% Demonstration of the feature tracking
     figure
+    record = true;
     
+    if record
+        vid = VideoWriter(sprintf('%s.avi', input));
+        open(vid);
+    end
+
     for i = start:max
         filename = sprintf('%s%04i.%s', base, i, ext);
         filename_prev = sprintf('%s%04i.%s', base, i - 1, ext);
@@ -40,27 +46,40 @@ function [] = tracking(input, correction)
             H = harris_corner_detector(img, 'sobel', sigma, n, threshold, false);
             imshow(img_org); 
             hold on;
-            plot(H(:,1), H(:,2), 'bo', 'MarkerSize', 10);
+            plot(H(:,1), H(:,2), 'g.', 'MarkerSize', 10);
             hold off;
         else
             imshow(img_org);
             hold on;
             [u, v] = lucas_kanade(filename_prev, filename, region_s, false);
-            H = translate_features(H, u, v, region_s);
-            plot(H(:,1), H(:,2), 'bo', 'MarkerSize', 10);
+            [H, A] = translate_features(H, u, v, region_s);
+            plot(H(:,1), H(:,2), 'g.', 'MarkerSize', 10);
+            quiver(H(:,1), H(:,2), A(:,1), A(:,2))
             hold off;
         end
-        title(sprintf('%i / %i', i, max));       
-        pause(0.2);        
+        title(sprintf('%i / %i', i, max));  
+        
+        if record
+            frame = getframe(gcf);
+            writeVideo(vid, frame);
+        else
+            pause(0.1);
+        end
     end   
+    
+    if record
+        close(vid);
+    end
+    
     
 end
 
 %% Feature translation function
-function [H_new] = translate_features(H, u, v, region_s)
+function [H_new, A] = translate_features(H, u, v, region_s)
     n = size(H, 1);
     [max_h, max_w] = size(u);
     H_new = zeros(size(H));
+    A = zeros(size(H));
     
     % Calculate the new corner detection H matrix based on Lucas_Kanade
     % optical flow estimatiion
@@ -68,7 +87,8 @@ function [H_new] = translate_features(H, u, v, region_s)
         region_h = floor(H(i, 2) / region_s) + 1;
         region_w = floor(H(i, 1) / region_s) + 1;
         if region_h > 0 && region_w > 0 && region_w <= max_w && region_h <= max_h % A feature can fall out of the image
-            H_new(i, :) = [H(i, 1) + v(region_h, region_w), H(i, 2) + u(region_h, region_w)];
+            A(i, :) = [v(region_h, region_w), u(region_h, region_w)];
+            H_new(i, :) = H(i, :) + A(i, :);
         else
             H_new(i, :) = H(i, :);
         end
