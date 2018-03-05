@@ -5,8 +5,10 @@ function [] = harris_corner()
 image_id = 'pingpong';      % Image IDs to switch between input test images
                             % Options: 'person_toy' and 'pingpong'
                             
-Gd_type = 'matlab';         % Type of the gaussian derivative function to be used
+Gd_type = 'sobel';          % Type of the gaussian derivative function to be used
                             % Options: 'sobel' and 'matlab'
+                            
+sigma = 2;                  % Gaussian smoothing parameter, sigma
                             
 threshold = 0.025;          % User defined threshold for corner point selection
 
@@ -32,7 +34,7 @@ figure(1), imshow(image); title('Harris Corner input image');
 
 %% Apply Harris Corner Detector Algorithm 
 imgray = im2double(rgb2gray(image));
-H = harris_corner_detector(imgray, Gd_type, n, threshold);
+H = harris_corner_detector(imgray, Gd_type, sigma, n, threshold);
 
 %% Display results
 figure(3), imshow(image); title('Harris Corner detector: output image');

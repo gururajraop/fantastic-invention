@@ -1,8 +1,9 @@
-function [ H ] = harris_corner_detector(image, Gd_type, n, threshold)
+function [ H ] = harris_corner_detector(image, Gd_type, sigma, n, threshold)
 % HARRIS_CORNER_DETECTOR function returns the 
 % ARGUMENTS
 %   image           Input image
 %   Gd_type         Gaussian derivative type
+%   sigma           Gaussian smoothing parameter sigma
 %   n               Corner detection window size
 %   threshold       User defined threshold for corner detection
 %
@@ -28,9 +29,9 @@ subplot(1,2,1), imshow(Ix, []); title('Image derivative Ix');
 subplot(1,2,2), imshow(Iy, []); title('Image derivative Iy');
 
 %% Compute the Q matrix elements
-A = imgaussfilt((Ix .* Ix), 2, 'FilterSize', 9, 'Padding', 'symmetric');
-B = imgaussfilt((Ix .* Iy), 2, 'FilterSize', 9, 'Padding', 'symmetric');
-C = imgaussfilt((Iy .* Iy), 2, 'FilterSize', 9, 'Padding', 'symmetric');
+A = imgaussfilt((Ix .* Ix), sigma, 'FilterSize', 9, 'Padding', 'symmetric');
+B = imgaussfilt((Ix .* Iy), sigma, 'FilterSize', 9, 'Padding', 'symmetric');
+C = imgaussfilt((Iy .* Iy), sigma, 'FilterSize', 9, 'Padding', 'symmetric');
 
 %% Compute the H matrix
 Corners = ((A .* C) - (B .^ 2)) - 0.04 * ((A + C) .^ 2);
