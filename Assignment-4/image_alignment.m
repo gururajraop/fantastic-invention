@@ -1,8 +1,8 @@
 function [] = image_alignment()
-image1 = imread('./boat1.pgm');
-image2 = imread('./boat2.pgm');
+image1 = im2single(imread('./boat1.pgm'));
+image2 = im2single(imread('./boat2.pgm'));
 
-keypoint_matching(image1, image2);
+keypoints = keypoint_matching(image1, image2);
 
 RANSAC(image1, image2);
 RANSAC(image2, image1);
