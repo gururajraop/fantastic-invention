@@ -44,9 +44,10 @@ function [u, v] = lucas_kanade(im1, im2, region_s, fancyplot)
     
     %% 
     % Take derrivates in all directions 
-    imx = diff(im, 1, 1);
-    imx(max_h, :, :) = 0; % We lose one row because of diff function, add a row of 0's
-    imy = diff(im, 1, 2);
+    [imy, imx] = imgradientxy(im2);
+%     imx = diff(im, 1, 1);
+%     imx(max_h, :, :) = 0; % We lose one row because of diff function, add a row of 0's
+%     imy = diff(im, 1, 2);
     imt = diff(im, 1, 3);
 
     %% For each region calculate optical flow    
