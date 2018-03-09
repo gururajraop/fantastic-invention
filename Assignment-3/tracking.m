@@ -88,7 +88,7 @@ function [H_new, A] = translate_features(H, u, v, region_s)
         region_w = floor(H(i, 1) / region_s) + 1;
         if region_h > 0 && region_w > 0 && region_w <= max_w && region_h <= max_h % A feature can fall out of the image
             A(i, :) = [v(region_h, region_w), u(region_h, region_w)];
-            H_new(i, :) = H(i, :) + 10.*A(i, :);
+            H_new(i, :) = H(i, :) + 12.*A(i, :);
         else
             H_new(i, :) = H(i, :);
         end
