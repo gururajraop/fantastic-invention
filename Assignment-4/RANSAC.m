@@ -41,7 +41,6 @@ function [f1_new, t_new, best_x] = RANSAC(t, f1, f2)
             best_x = x;
             best_inliers = inliers;
         end
-        best_inliers
     end
     
     f1_new = zeros(size(f1));

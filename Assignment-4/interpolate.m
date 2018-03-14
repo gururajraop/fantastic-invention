@@ -1,4 +1,4 @@
-function [img_matlab] = interpolate(image, transformation)
+function [image_transformed] = interpolate(image, transformation)
 [h, w, c] = size(image);
 
 m = reshape(transformation(1:4), 2, 2);
@@ -21,10 +21,23 @@ end
 T_m = [m' [0 0]'; 0 0 1]';
 T = maketform('affine', T_m);
 img_matlab = imtransform(image, T);
+image_transformed = remove_dots(image_transformed);
 
 figure()
 subplot(1,3,1), imshow(image); title('Original Image');
 subplot(1,3,2), imshow(image_transformed); title('Transformed Image');
 subplot(1,3,3), imshow(img_matlab); title('Matlab tranformation');
 
+end
+
+function [image] = remove_dots(image)
+    [h, w, ~] = size(image);
+    s = 2;
+    for x = s+1:h-s
+        for y = s+1:w-s
+            if mean(image(x, y), 3) == 0  
+                image(x, y, :) = mean(mean(image(x-s:x+s, y-s:y+s), 1), 2);
+            end
+        end
+    end
 end

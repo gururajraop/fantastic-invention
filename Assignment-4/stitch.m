@@ -25,15 +25,11 @@ function [output] = stitch(image1, image2)
 
     for x = 1:h2
         for y = 1:w2
-            x_coord = x + t(2) + 0;
+            x_coord = x + t(2);
             y_coord = y + t(1) + t_extra(2);
 
             if x_coord > 0 && y_coord > 0
-%                 if mean(output(x_coord, y_coord), 3) > 0
-%                     output(x_coord, y_coord, :) = 2* (.5 * image2(x, y, :) + .5 * output(x_coord, y_coord, :));
-%                 else
-                    output(x_coord, y_coord, :) = image2(x, y, :);
-%                 end                
+                output(x_coord, y_coord, :) = image2(x, y, :);
             end
         end
     end
