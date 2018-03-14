@@ -20,7 +20,7 @@ function [] = plot_matching_points(image1, image2, matches, F1, F2)
         set(h1,'color','r','linewidth',2);
         
         data2 = F2(:, F2_index);
-        data2(1) = data2(1) + w;
+        data2(1) = data2(1) + w;        
         
         h2 = vl_plotframe(data2);        
         set(h2,'color','r','linewidth',2);
