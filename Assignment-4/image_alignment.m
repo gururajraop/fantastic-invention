@@ -12,4 +12,6 @@ function [] = image_alignment()
 %     [f2_new, t_new, transformation_2] = RANSAC(m, f2, f1);
 %     plot_matching_points(image2, image1, t_new, f2, f2_new);
 
+
+
 end

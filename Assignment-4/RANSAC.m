@@ -7,7 +7,7 @@ function [f1_new, t_new, best_x] = RANSAC(t, f1, f2)
     for i = 1:n
         
         perm = randperm(size(t, 2));
-        perm_n = randi(size(t, 2));
+        perm_n = randi([1, size(t, 2) / 2]);
         p = perm(1:perm_n);
      
         A = zeros(2*perm_n, 6);
@@ -41,7 +41,7 @@ function [f1_new, t_new, best_x] = RANSAC(t, f1, f2)
             best_x = x;
             best_inliers = inliers;
         end
-%         best_inliers
+        best_inliers
     end
     
     f1_new = zeros(size(f1));
