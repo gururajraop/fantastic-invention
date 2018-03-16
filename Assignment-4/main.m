@@ -3,7 +3,7 @@ clc
 close all
 
 %% Image Alignment
-% image_alignment();
+image_alignment();
 
 %% Image Stitching
 image_stitching();

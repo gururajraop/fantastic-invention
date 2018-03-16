@@ -1,4 +1,6 @@
 function [image_transformed] = interpolate(image, transformation)
+better_interpolate = true;
+
 [h, w, c] = size(image);
 
 m = reshape(transformation(1:4), 2, 2);
@@ -21,7 +23,9 @@ end
 T_m = [m' [0 0]'; 0 0 1]';
 T = maketform('affine', T_m);
 img_matlab = imtransform(image, T);
-image_transformed = remove_dots(image_transformed);
+if better_interpolate
+    image_transformed = remove_dots(image_transformed);
+end
 
 figure()
 subplot(1,3,1), imshow(image); title('Original Image');

@@ -8,7 +8,7 @@ function [output] = stitch(image1, image2)
     [f1_new, t_new, transformation_1] = RANSAC(matches, f1, f2);
 %     plot_matching_points(image1, image2, t_new, f1, f1_new);
     image1_new = interpolate(image1, transformation_1);   
-    t = round(reshape(transformation_1(5:6), 2, 1))
+    t = round(reshape(transformation_1(5:6), 2, 1));
 
 
     [h2, w2, c] = size(image2);
@@ -16,7 +16,7 @@ function [output] = stitch(image1, image2)
     [h1org, w1org, ~] = size(image1);
     
     t = -t;
-    t_extra = [h1 - h1org, w1 - w1org]
+    t_extra = [h1 - h1org, w1 - w1org];
     
     new_h = max(h1, h2);
     output = zeros(new_h, w2 + t(1) + t_extra(2), c);

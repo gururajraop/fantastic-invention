@@ -1,15 +1,13 @@
-function [] = plot_matching_points(image1, image2, matches, F1, F2)
-    i = imshowpair(image1, image2, 'montage');
-    
+function [] = plot_matching_points(image1, image2, matches, F1, F2) 
     [~, w, ~] = size(image1);
     
+    figure();
+    i = imshowpair(image1, image2, 'montage');
     alpha(i, 0.5);
     hold on;
     
-
     perm = randperm(size(matches,2)) ;
     sel = perm(1:50);
-
     
     for s = sel
         F1_index = matches(1, s);
