@@ -1,5 +1,5 @@
 function [f1_new, t_new, best_x] = RANSAC(t, f1, f2)
-    n = randi(200);
+    n = randi([15, 100]);
     
     best_inliers = 0;
     best_x = [1 1 0; 1 1 0];
@@ -7,7 +7,7 @@ function [f1_new, t_new, best_x] = RANSAC(t, f1, f2)
     for i = 1:n
         
         perm = randperm(size(t, 2));
-        perm_n = randi([1, round(size(t, 2) / 2)]);
+        perm_n = randi([1, round(size(t, 2) / 3)]);
         p = perm(1:perm_n);
      
         A = zeros(2*perm_n, 6);
@@ -50,5 +50,5 @@ function [f1_new, t_new, best_x] = RANSAC(t, f1, f2)
         f1_new(3:4, j) = f1(3:4, f1_index);
     end
     
-    t_new = [t(1, :); t(1, :)];         
+    t_new = [t(1, :); t(1, :)];  
 end
