@@ -12,7 +12,8 @@ function [features] = feature_extraction(selected_files)
                 image_gray = image;
             end
             
-            [~, D] = vl_sift(image_gray);
+%             [~, D] = vl_sift(image_gray);
+            D = get_features(image_gray, 'normal', 'gray');
             
             features = [features; D'];
         end
