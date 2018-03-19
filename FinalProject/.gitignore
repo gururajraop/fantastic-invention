@@ -1,0 +1,5 @@
+Caltech4/
+part2/*
+!part2/*.m
+.DS_Store
+*.pdf
