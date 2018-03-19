@@ -3,7 +3,9 @@ clc
 close all
 
 %% Read the input images and process them for various setup
-data_processing();
+num_images = 10;
+file_names = get_file_names(num_images);
+data_processing(file_names);
 
 %% Feature extraction and description
 feature_extraction();

@@ -1,5 +1,3 @@
-function [] = data_processing()
-
-    
+function [] = data_processing(file_names)
 
 end
