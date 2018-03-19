@@ -1,4 +1,5 @@
-Caltech4/
+part1/Caltech4/
+part1/*.asv
 part2/*
 !part2/*.m
 .DS_Store
