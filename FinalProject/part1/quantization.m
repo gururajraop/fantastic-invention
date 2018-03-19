@@ -1,3 +1,3 @@
-function [] = quantization()
+function [] = quantization(vocab)
 
 end
