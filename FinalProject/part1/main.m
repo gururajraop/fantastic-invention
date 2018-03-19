@@ -7,8 +7,6 @@ num_images = 10;
 k = 400;
 file_names = get_file_names(num_images);
 
-% data_processing(file_names);
-
 %% Feature extraction and description
 features = feature_extraction(file_names);
 
