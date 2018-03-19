@@ -15,7 +15,7 @@ vocab = build_visual_vocab(features, k);
 % save(sprintf('vocab/%d_images_%d_vocabsize.mat', num_images, k), 'vocab')
 
 %% Quantize the features using the visual vocabulory
-quantization();
+quantization(vocab, image);
 
 %% Image representation
 representation();
