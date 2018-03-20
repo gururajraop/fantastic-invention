@@ -3,7 +3,7 @@ clc
 close all
 
 %% User defined parameters
-num_images = 10;            % number of images used in vocabulary
+num_images = 200;            % number of images used in vocabulary
 k = 400;                    % k value for k-means clustering
 sift_type = 'normal';       % the sift type
                             % 'normal' 'dense'

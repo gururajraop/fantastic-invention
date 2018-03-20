@@ -17,17 +17,21 @@ function [words, histogram] = quantization(vocab, image, sift_type, colorspace)
     histogram = histogram ./ size(features, 1);
 end
 
-function [word, distance, word_n] = find_closest_word(feature, vocab)
+function [word, distance_best, word_n] = find_closest_word(feature, vocab)
     word_n = 1;
     word = vocab(1, :);
-    distance = norm(feature, vocab(1, :));
+    distance_best = distance(feature, vocab(1, :));
     
     for b = 2:size(vocab, 1)
-        distance_next = norm(feature, vocab(b, :));
-        if distance_next < distance
-            distance = distance_next;
+        distance_next = distance(feature, vocab(b, :));
+        if distance_next < distance_best
+            distance_best = distance_next;
             word = vocab(b, :);
             word_n = b;
         end        
     end
+end
+
+function dist = distance(a, b)
+    dist = sqrt(sum((diff([a; b])).^2));
 end
