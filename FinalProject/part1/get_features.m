@@ -21,7 +21,7 @@ function [D] = normal_sift(image, color_space)
                 [~, Des] = vl_sift(image(:,:,c));
                 D = [D, Des];
             end
-        case 'rgb'
+        case 'nrgb'
             if size(image, 3) > 1
                 image = single(rgb2normedrgb(image));
             end
@@ -55,7 +55,7 @@ function [D] = dense_sift(image, color_space)
                 [~, Des] = vl_dsift(image(:,:,c), 'step', 10);
                 D = [D, Des];
             end
-        case 'rgb'
+        case 'nrgb'
             if size(image, 3) > 1
                 image = single(rgb2normedrgb(image));
             end
