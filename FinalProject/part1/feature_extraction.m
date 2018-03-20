@@ -8,7 +8,7 @@ function [features] = feature_extraction(selected_files, sift_type, color_space)
             image = im2single(image);
             
             D = get_features(image, sift_type, color_space);
-            features = [features; D'];
+            features = [features; D];
         end
     end  
     

@@ -6,6 +6,8 @@ function [features] = get_features(image, sift_type, color_space)
     else
         error('Unexpected SIFT descriptor extraction type');
     end
+    
+    features = features';
 end
 
 function [D] = normal_sift(image, color_space)

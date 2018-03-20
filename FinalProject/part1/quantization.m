@@ -1,8 +1,7 @@
 % takes an image and vocab as input and returns a list of words
 
 function [words, histogram] = quantization(vocab, image, sift_type, colorspace)
-    features = [];
-    features = [features; get_features(image, sift_type, colorspace)];
+    features = get_features(image, sift_type, colorspace);
 
     words = zeros(size(features));
     histogram = zeros(size(vocab, 1), 1);
