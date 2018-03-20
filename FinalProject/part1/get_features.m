@@ -15,7 +15,7 @@ function [D] = normal_sift(image, color_space)
             if size(image, 3) > 1
                 image = rgb2gray(image);
             end
-            [~, D] = vl_dsift(image);
+            [~, D] = vl_sift(image);
         case 'RGB'
             for c=1:size(image, 3)
                 [~, Des] = vl_sift(image(:,:,c));

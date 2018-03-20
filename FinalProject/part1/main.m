@@ -18,11 +18,12 @@ file_names = get_file_names(num_images);
 features = feature_extraction(file_names, sift_type, color_space);
 
 %% Build visual vocabulory
-% vocab = build_visual_vocab(features, k);
+vocab = build_visual_vocab(features, k);
 % save(sprintf('vocab/%d_images_%d_vocabsize.mat', num_images, k), 'vocab')
 
+
 %% Quantize the features using the visual vocabulory
-quantization(vocab, image);
+% quantization(vocab, image, sift_type, color_space);
 
 %% Image representation
 representation();

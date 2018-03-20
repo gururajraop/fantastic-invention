@@ -1,15 +1,8 @@
 % takes an image and vocab as input and returns a list of words
 
-function [words, histogram] = quantization(vocab, image)
+function [words, histogram] = quantization(vocab, image, sift_type, colorspace)
     features = [];
-    features = [features; get_features(image, 'normal', 'gray')];
-%     features = [features; get_features(image, 'normal', 'RGB')];
-%     features = [features; get_features(image, 'normal', 'rgb')];
-%     features = [features; get_features(image, 'normal', 'opponent')];
-%     features = [features; get_features(image, 'dense', 'gray')];
-%     features = [features; get_features(image, 'dense', 'RGB')];
-%     features = [features; get_features(image, 'dense', 'rgb')];
-%     features = [features; get_features(image, 'dense', 'opponent')];
+    features = [features; get_features(image, sift_type, colorspace)];
 
     words = zeros(size(features));
     histogram = zeros(size(vocab, 1), 1);
@@ -19,8 +12,9 @@ function [words, histogram] = quantization(vocab, image)
         [word, ~, word_n] = find_closest_word(feature, vocab);
         words(f, :) = word;
         histogram(word_n, 1) = histogram(word_n, 1) + 1;
-    end   
-
+    end  
+    
+    histogram = histogram ./ size(features, 1);
 end
 
 function [word, distance, word_n] = find_closest_word(feature, vocab)
