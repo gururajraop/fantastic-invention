@@ -53,7 +53,7 @@ function [D] = dense_sift(image, color_space)
             end
             [~, D] = vl_dsift(image);
         case 'RGB'
-            for c=1:size(image, 3)
+            for c=1:size(image, 3)                
                 [~, Des] = vl_dsift(image(:,:,c), 'step', 10);
                 D = [D, Des];
             end

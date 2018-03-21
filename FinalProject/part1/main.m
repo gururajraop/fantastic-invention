@@ -11,20 +11,20 @@ color_space = 'gray';       % color space to be used
                             % 'gray' 'RGB' 'rgb' 'opponent'
                             
 %% Build all types of vocabulary and save them
-% build_all_vocab();
+build_all_vocab();
                             
                             
-%% Read the input images and process them for various setup
-[file_names, remaining] = get_file_names(num_images);
-
-%% Feature extraction and description
-features = feature_extraction(file_names, sift_type, color_space);
-
-%% Build visual vocabulory
-vocab = build_visual_vocab(features, k);
-
-%% Image representation
-% representation();
-
-%% Classification
-classification(remaining, vocab, sift_type, color_space);
+% %% Read the input images and process them for various setup
+% [file_names, remaining] = get_file_names(num_images);
+% 
+% %% Feature extraction and description
+% features = feature_extraction(file_names, sift_type, color_space);
+% 
+% %% Build visual vocabulory
+% vocab = build_visual_vocab(features, k);
+% 
+% %% Image representation
+% % representation();
+% 
+% %% Classification
+% classification(remaining, vocab, sift_type, color_space);
