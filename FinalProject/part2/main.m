@@ -1,5 +1,7 @@
 %% main function 
-
+clear;
+clc;
+close all;
 
 %% fine-tune cnn
 
