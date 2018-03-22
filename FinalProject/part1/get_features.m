@@ -25,7 +25,7 @@ function [D] = normal_sift(image, color_space)
             end
         case 'nrgb'
             if size(image, 3) > 1
-                image = single(rgb2normedrgb(image));
+                image = im2single(rgb2normedrgb(image));
             end
             for c=1:size(image, 3)
                 [~, Des] = vl_sift(image(:,:,c));
@@ -33,7 +33,7 @@ function [D] = normal_sift(image, color_space)
             end
         case 'opponent'
             if size(image, 3) > 1
-                image = single(rgb2opponent(image));
+                image = im2single(rgb2opponent(image));
             end
             for c=1:size(image, 3)
                 [~, Des] = vl_sift(image(:,:,c));
@@ -59,7 +59,7 @@ function [D] = dense_sift(image, color_space)
             end
         case 'nrgb'
             if size(image, 3) > 1
-                image = single(rgb2normedrgb(image));
+                image = im2single(rgb2normedrgb(image));
             end
             for c=1:size(image, 3)
                 [~, Des] = vl_dsift(image(:,:,c), 'step', 10);
@@ -67,7 +67,7 @@ function [D] = dense_sift(image, color_space)
             end
         case 'opponent'
             if size(image, 3) > 1
-                image = single(rgb2opponent(image));
+                image = im2single(rgb2opponent(image));
             end
             for c=1:size(image, 3)
                 [~, Des] = vl_dsift(image(:,:,c), 'step', 10);

@@ -29,7 +29,6 @@ if ~isfield(opts.train, 'gpus'), opts.train.gpus = []; end;
 
 net = update_model();
 
-%% TODO: Implement getCaltechIMDB function below
 
 % if exist(opts.imdbPath, 'file')
 %   imdb = load(opts.imdbPath) ;
@@ -85,22 +84,14 @@ splits = {'train', 'test'};
 
 [files_train, counts_train] = get_file_names('train');
 [files_test, counts_test] = get_file_names('test');
-data = zeros(32, 32, 3, sum(counts_train) + sum(counts_test));
+data = single(zeros(32, 32, 3, sum(counts_train) + sum(counts_test)));
 cc = 1;
 for c=1:4
     for f=1:size(files_train,2)
        fn = files_train(c, f);
        if fn ~= ""
            fn_path = sprintf('./data/Caltech4/ImageData/%s.jpg', fn);
-           image = imread(fn_path);
-           if size(image, 3) == 1
-               new_image = zeros(size(image, 1), size(image, 2), 3);
-               new_image(:, :, 1) = image;
-               new_image(:, :, 2) = image;
-               new_image(:, :, 3) = image;
-               image = new_image;               
-           end
-           image = imresize(image, [32 32]);
+           image = read_process_im(fn_path);
            data(:, :, :, cc) = image;
            cc = cc + 1;
        end
@@ -112,43 +103,42 @@ for c=1:4
        fn = files_test(c, f);
        if fn ~= ""
            fn_path = sprintf('./data/Caltech4/ImageData/%s.jpg', fn);
-           image = imread(fn_path);
-           if size(image, 3) == 1
-               new_image = zeros(size(image, 1), size(image, 2), 3);
-               new_image(:, :, 1) = image;
-               new_image(:, :, 2) = image;
-               new_image(:, :, 3) = image;
-               image = new_image;               
-           end
-           image = imresize(image, [32 32]);
+           image = read_process_im(fn_path);
            data(:, :, :, cc) = image;
            cc = cc + 1;
        end
     end    
 end
 
-labels = [];
-c = 1;
+labels = zeros(sum(counts_train) + sum(counts_test), 1);
+cum_count = 1;
+class = 1;
 for count=counts_train
-    labels = [labels, repmat(c, [1, count])];
-    c = c + 1;
+    labels(cum_count:cum_count+count-1,:) = repmat(class, [count, 1]);
+    cum_count = cum_count + count;
+    class = class + 1;
 end
+class = 1;
 for count=counts_test
-    labels = [labels, repmat(c, [1, count])];
-    c = c + 1;
+    labels(cum_count:cum_count+count-1,:) = repmat(class, [count, 1]);
+    cum_count = cum_count + count;
+    class = class + 1;
 end
-sets = repmat(1, [1, sum(counts_train)]);
-sets = [sets, repmat(2, [1, sum(counts_test)])];
 
-size(data)
-size(sets)
-size(labels)
+sets = zeros(sum(counts_train) + sum(counts_test), 1);
+sets(1:sum(counts_train), :) = ones([sum(counts_train), 1]);
+sets(sum(counts_train)+1:end) = repmat(2, [sum(counts_test), 1]);
+
+labels = labels';
+sets = sets';
+
+
 %%
 % subtract mean
 dataMean = mean(data(:, :, :, sets == 1), 4);
 data = bsxfun(@minus, data, dataMean);
 
-imdb.images.data = single(data);
+imdb.images.data = data;
 imdb.images.labels = single(labels) ;
 imdb.images.set = sets;
 imdb.meta.sets = {'train', 'val'} ;
@@ -159,4 +149,16 @@ imdb.images.data = imdb.images.data(:,:,:, perm);
 imdb.images.labels = imdb.images.labels(perm);
 imdb.images.set = imdb.images.set(perm);
 
+end
+
+function [image] = read_process_im(path)
+    image = im2single(imread(path));
+    if size(image, 3) == 1
+       new_image = zeros(size(image, 1), size(image, 2), 3);
+       new_image(:, :, 1) = image;
+       new_image(:, :, 2) = image;
+       new_image(:, :, 3) = image;
+       image = new_image;               
+    end
+    image = imresize(image, [32 32]);
 end
