@@ -19,7 +19,7 @@ max_iter = 500;
 %         try
 %             disp('Building vocab');
 %             tic;
-%             vocab = build_visual_vocab(features, k, max_iter, false);
+%             vocab = build_visual_vocab(features, k, max_iter, true);
 %             toc;
 %             save(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_types{1}, color), 'vocab');
 %         catch e
@@ -42,7 +42,7 @@ for color = color_spaces
         try
             disp('Building vocab');
             tic;
-            vocab = build_visual_vocab(features, k, max_iter, true);
+            vocab = build_visual_vocab(features, k, max_iter, false);
             toc;
             save(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_types{2}, color), 'vocab');
         catch e
