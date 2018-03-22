@@ -3,7 +3,8 @@ sift_types = ["normal", "dense"];
 color_spaces = [ "RGB", "nrgb",  "opponent", "gray"];
 k_values = [400, 800, 1600, 2000, 4000];
 num_images = 250;
-max_f = 750000;
+max_f = 200 * num_images * 4;
+max_iter = 500;
 
 %% Normal SIFT type
 % for color = color_spaces
@@ -18,7 +19,7 @@ max_f = 750000;
 %         try
 %             disp('Building vocab');
 %             tic;
-%             vocab = build_visual_vocab(features, k);
+%             vocab = build_visual_vocab(features, k, max_iter, false);
 %             toc;
 %             save(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_types{1}, color), 'vocab');
 %         catch e
@@ -41,10 +42,11 @@ for color = color_spaces
         try
             disp('Building vocab');
             tic;
-            vocab = build_visual_vocab(features, k);
+            vocab = build_visual_vocab(features, k, max_iter, true);
             toc;
             save(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_types{2}, color), 'vocab');
         catch e
+            toc;
             warning('ERROR! Failed to build vocab %d_images_%d_vocabsize_%s_%s.mat\n%s', num_images, k, sift_types{2}, color, e.message);
         end
     end
