@@ -84,7 +84,7 @@ splits = {'train', 'test'};
 
 [files_train, counts_train] = get_file_names('train');
 [files_test, counts_test] = get_file_names('test');
-data = single(zeros(32, 32, 3, sum(counts_train) + sum(counts_test)));
+data = zeros(32, 32, 3, sum(counts_train) + sum(counts_test), 'single');
 cc = 1;
 for c=1:4
     for f=1:size(files_train,2)
