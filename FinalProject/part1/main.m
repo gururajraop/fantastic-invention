@@ -9,7 +9,7 @@ sift_type = 'dense';        % the sift type
                             % 'normal' 'dense'
 color_space = 'gray';       % color space to be used
                             % 'gray' 'RGB' 'rgb' 'opponent'
-train_set_size = 5;        % Number of images to be used for each class in
+train_set_size = 50;        % Number of images to be used for each class in
                             % training the classifier
                             
 %% Build all types of vocabulary and save them
@@ -37,4 +37,4 @@ load(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_type,
 test_size = 50;
 [files, ~] = get_file_names(test_size, 'test');
 load('classifiers/classifiers.mat', 'classifiers');
-evaluation(files, classifiers, test_size, vocab, k, sift_type, color_space)
+evaluation(files, classifiers, test_size, vocab, sift_type, color_space)
