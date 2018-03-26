@@ -1,4 +1,4 @@
-function [selected_files, unselected_files] = get_file_names(n)
+function [selected_files, unselected_files] = get_file_names(n, set)
 %% User defined parameters
 classes = {'airplanes', 'cars', 'faces', 'motorbikes'};
 path = './Caltech4/';
@@ -6,7 +6,7 @@ path = './Caltech4/';
 %% Read the input image paths
 image_list = {};
 for class = classes
-    file_name = sprintf('%s%s%s%s.txt', path, 'ImageSets/', class{1}, '_train');
+    file_name = sprintf('%s%s%s_%s.txt', path, 'ImageSets/', class{1}, set);
     file_list = fopen(file_name, 'r');
     image_list{end+1} = textscan(file_list, '%s');
     fclose(file_list);
