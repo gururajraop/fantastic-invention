@@ -2,7 +2,6 @@ function net = update_model(varargin)
 opts.networkType = 'simplenn' ;
 opts = vl_argparse(opts, varargin) ;
 
-
 %% TODO: PLAY WITH THESE PARAMETERTS TO GET A BETTER ACCURACY
 
 lr_prev_layers = [.2, 2];

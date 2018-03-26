@@ -1,13 +1,14 @@
 function [net, info, expdir] = finetune_cnn(varargin)
 
 %% Define options
-
+global EPOCH;
+global BATCH_SIZE;
 
 opts.modelType = 'lenet' ;
 [opts, varargin] = vl_argparse(opts, varargin) ;
 
 opts.expDir = fullfile('data', ...
-  sprintf('cnn_assignment-%s', opts.modelType)) ;
+  sprintf('cnn_assignment-%s-epoch-%d-batch-%d', opts.modelType, EPOCH, BATCH_SIZE)) ;
 [opts, varargin] = vl_argparse(opts, varargin) ;
 
 opts.dataDir = './data/' ;
