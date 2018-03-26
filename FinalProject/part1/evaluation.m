@@ -32,6 +32,9 @@ function [] = evaluation(test_files, classifiers, test_size, vocab, k, sift_type
     
     disp('Evaluation started');
     for class=1:4
-        scores(class, :) = predict(labels, sparse(features), classifiers{class});
+        [class_predicted, accuracy, class_scores] = predict(labels, sparse(features), classifiers{class});
+        scores(class, :) = sort(class_scores);
     end
+    
+    
 end
