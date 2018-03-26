@@ -30,13 +30,13 @@ if ~isfield(opts.train, 'gpus'), opts.train.gpus = []; end;
 net = update_model();
 
 
-% if exist(opts.imdbPath, 'file')
-%   imdb = load(opts.imdbPath) ;
-% else
+if exist(opts.imdbPath, 'file')
+  imdb = load(opts.imdbPath) ;
+else
   imdb = getCaltechIMDB() ;
   mkdir(opts.expDir) ;
   save(opts.imdbPath, '-struct', 'imdb') ;
-% end
+end
 
 %%
 net.meta.classes.name = imdb.meta.classes(:)' ;
