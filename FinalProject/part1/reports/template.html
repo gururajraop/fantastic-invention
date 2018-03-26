@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Image list prediction</title>
+  <style type="text/css">
+   img {
+     width:200px;
+   }
+  </style>
+  </head>
+  <body>
+
+<h2>Boutkan, Rao</h2>
+<h1>Settings</h1>
+<table>
+<tr><th>SIFT step size</th><td>{{SIFT_STEP}} px</td></tr>
+<tr><th>SIFT block sizes</th><td>{{SIFT_BLOCK}} pixels</td></tr>
+<tr><th>SIFT method</th><td>{{SIFT_METHOD}}-SIFT</td></tr>
+<tr><th>Vocabulary size</th><td>{{VOCAB_SIZE}} words</td></tr>
+<tr><th>Vocabulary fraction</th><td>{{VOCAB_FRAC}}</td></tr>
+<tr><th>SVM training data</th><td>{{SVM_POS}} positive, {{SVM_NEG}} negative per class</td></tr>
+<tr><th>SVM kernel type</th><td>{{SVM_KERNEL}}</td></tr>
+</table>
+<h1>Prediction lists (MAP: {{MAP}})</h1>
+<table>
+<thead>
+<tr>
+<th>Airplanes (AP: {{AP_AIR}})</th><th>Cars (AP: {{AP_CAR}})</th><th>Faces (AP: {{AP_FACE}})</th><th>Motorbikes (AP: {{AP_BIKE}})</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><img src="Caltech4/ImageData/airplanes_test/{{air1}}.jpg" /></td><td><img src="Caltech4/ImageData/cars_test/{{car1}}.jpg" /></td><td><img src="Caltech4/ImageData/faces_test/{{face1}}.jpg" /></td><td><img src="Caltech4/ImageData/motorbikes_test/{{bike1}}.jpg" /></td></tr>
+
+</tbody>
+</table>
+  </body>
+</html>
