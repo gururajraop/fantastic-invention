@@ -15,6 +15,7 @@ function [classifier] = train_classifier(class, n, unselected_files, vocab, sift
     features = zeros(n*4, size(vocab, 1));
     labels = zeros(n*4, 1);
     
+    disp('Feature extraction for training');
     i = 1;
     for ex=pos_examples
         fn = sprintf('Caltech4/ImageData/%s.jpg', ex);
@@ -32,5 +33,7 @@ function [classifier] = train_classifier(class, n, unselected_files, vocab, sift
         i = i + 1;
     end
     
-    classifier = train(labels, sparse(features));
+    disp('Started the training');
+    best = train(labels, sparse(features), '-C -s 0 -q');
+    classifier = train(labels, sparse(features), sprintf('-c %f -s 0 -q', best(1)));
 end
