@@ -1,6 +1,6 @@
 function [] = train_all()
 sift_types = ["normal", "dense"];
-color_spaces = [ "RGB", "nrgb",  "opponent", "gray"];
+color_spaces = [ "gray", "nrgb",  "opponent"];
 k_values = [400, 800, 1600, 2000, 4000];
 num_images = 250;
 train_set_size = 50;
@@ -13,7 +13,7 @@ for color = color_spaces
             load(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_types{1}, color), 'vocab');
             load(sprintf('vocab/unselected-%d_images_%s_%s.mat', num_images, sift_types{1}, color), 'unselected');
             tic
-            classifiers = classification(unselected, vocab, sift_types{1}, color, train_set_size);
+            classifiers = train_classifier(0, train_set_size, unselected, vocab, sift_types{1}, color);
             toc
             save(sprintf('classifiers/classifier_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_types{1}, color), 'classifiers');
         catch
