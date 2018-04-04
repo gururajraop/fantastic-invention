@@ -3,6 +3,8 @@ opts.networkType = 'simplenn' ;
 opts = vl_argparse(opts, varargin) ;
 
 %% TODO: PLAY WITH THESE PARAMETERTS TO GET A BETTER ACCURACY
+global EPOCH;
+global BATCH_SIZE;
 
 lr_prev_layers = [.2, 2];
 lr_new_layers  = [1, 4]; 
@@ -16,8 +18,8 @@ net.meta.trainOpts.learningRate = [ 0.05*ones(1,20) ...
                                     0.0005*ones(1,10)...
                                     ] ;
 net.meta.trainOpts.weightDecay = 0.0001 ;
-net.meta.trainOpts.batchSize = 100 ;
-net.meta.trainOpts.numEpochs = numel(net.meta.trainOpts.learningRate) ;
+net.meta.trainOpts.batchSize = BATCH_SIZE;
+net.meta.trainOpts.numEpochs = EPOCH;
 
 %% Define network 
 net.layers = {} ;
