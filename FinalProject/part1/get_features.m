@@ -23,6 +23,15 @@ function [D] = normal_sift(image, color_space)
                 [~, Des] = vl_sift(image(:,:,c));
                 D = [D, Des];
             end
+%             Ideally we should extract feature for gray and then use the
+%             same keypoints for the descriptor extraction
+%             image_gray = image;
+%             if size(image, 3) > 1
+%                 image_gray = rgb2gray(image);
+%             end
+%             [F, ~] = vl_sift(image_gray);
+%             D = get_desciptor(image, F);
+
         case 'nrgb'
             if size(image, 3) > 1
                 image = im2single(rgb2normedrgb(image));
@@ -102,6 +111,25 @@ output_image(:, :, 1) = (R - G) / sqrt(2);
 output_image(:, :, 2) = (R + G - (2 * B)) / sqrt(6);
 output_image(:, :, 3) = (R + G + B) / sqrt(3);
 
+end
+
+function [D] = get_desciptor(image, F)
+    D = zeros(3*size(F,2), 128);
+    i = 1;
+    for f=F
+        for c=1:size(image, 3)
+            f(3)
+              I_ = vl_imsmooth(image(:,:,c), sqrt(f(3).^2 - 0.5^2));
+              [Ix, Iy] = vl_grad(I_);
+              mod = sqrt(Ix.^2 + Iy.^2);
+              ang = atan2(Iy,Ix);
+              grd = shiftdim(cat(3,mod,ang),2);
+              grd = single(grd);
+              d = vl_siftdescriptor(grd, f);
+              D(i, :) = d';
+              i = i + 1;
+        end
+    end
 end
 
 
