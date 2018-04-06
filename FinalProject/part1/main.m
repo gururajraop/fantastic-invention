@@ -28,7 +28,7 @@ train_set_size = 50;        % Number of images to be used for each class in
 % representation();
 
 %% Train the SVM for all vocab types
-train_all();
+% train_all();
 
 %% Classification
 % load(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_type, color_space), 'vocab');
@@ -41,4 +41,10 @@ train_all();
 % [files, ~] = get_file_names(test_size, 'test');
 % load(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_type, color_space), 'vocab');
 % load(sprintf('classifiers/classifier_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_type, color_space), 'classifiers');
-% evaluation(files, classifiers, test_size, vocab, sift_type, color_space)
+% scores = evaluation(files, classifiers, test_size, vocab, sift_type, color_space)
+
+%% Sort using scores
+test_size = 50;
+score = rand(4*test_size, 1);
+[files, ~] = get_file_names(test_size, 'test');
+fill_template(files, score, test_size);
