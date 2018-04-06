@@ -1,8 +1,9 @@
-function [] = evaluation(test_files, classifiers, test_size, vocab, sift_type, color_space)
+function [scores, mAP] = evaluation(test_files, classifiers, test_size, vocab, sift_type, color_space)
     scores = zeros(4, 4 * test_size);
     features = zeros(test_size*4, size(vocab, 1));
     labels = zeros(test_size*4, 1);
     
+    disp('Feature extraction for evaluation');
     i = 1;
     for c = 1:4
         for ex=test_files(c, 1:test_size)
@@ -15,6 +16,7 @@ function [] = evaluation(test_files, classifiers, test_size, vocab, sift_type, c
         end
     end
     
+    disp('Evaluation started');
     mAP = ones(1, 4);
     for class=1:4
         disp(sprintf('Evaluation for class %d', class));

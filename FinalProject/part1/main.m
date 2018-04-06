@@ -36,6 +36,9 @@ train_set_size = 50;        % Number of images to be used for each class in
 % classifiers = classification(unselected, vocab, sift_type, color_space, train_set_size);
 % save('classifiers/classifiers.mat', 'classifiers');
 
+%% Evaluate all the trained models
+evaluate_all();
+
 %% Evaluation
 % test_size = 50;
 % [files, ~] = get_file_names(test_size, 'test');
@@ -44,7 +47,7 @@ train_set_size = 50;        % Number of images to be used for each class in
 % scores = evaluation(files, classifiers, test_size, vocab, sift_type, color_space)
 
 %% Sort using scores
-test_size = 50;
-score = rand(4*test_size, 1);
-[files, ~] = get_file_names(test_size, 'test');
-fill_template(files, score, test_size);
+% test_size = 50;
+% score = rand(4*test_size, 1);
+% [files, ~] = get_file_names(test_size, 'test');
+% fill_template(files, score, test_size);
