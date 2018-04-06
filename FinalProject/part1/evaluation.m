@@ -23,7 +23,10 @@ function [scores, mAP] = evaluation(test_files, classifiers, test_size, vocab, s
         class_label = double(labels==class);
         [predicted_labels, ~, class_scores] = predict(class_label, sparse(features), classifiers{class});
         scores(class, :) = sort(class_scores);
-        mAP(class) = get_mAP(class_label, predicted_labels);
+        shift = test_size * (4-class+1);
+        class_labels_shifted = circshift(class_label, shift);
+        predicted_labels_shifted = circshift(predicted_labels, shift);
+        mAP(class) = get_mAP(class_labels_shifted, predicted_labels_shifted);
     end
     
     disp('Mean average precision for each class is');
