@@ -13,7 +13,7 @@ for sift = sift_types
     for color = color_spaces
         for k = k_values
             try
-                disp(sprintf('Evaluating for vocab: %d_images_%d_vocabsize_%s_%s', num_images, k, sift, color));
+                fprintf('Evaluating for vocab: %d_images_%d_vocabsize_%s_%s\n', num_images, k, sift, color);
                 load(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'vocab');
                 load(sprintf('classifiers/classifier_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'classifiers');
                 tic
