@@ -1,12 +1,13 @@
-function [] = fill_template(files, score, set_size)
-    [~, idx] = sort(score);
+function [] = fill_template(files, scores, mAP, set_size, color_space, sift_type, k)
 
     file_name = fileread('reports/template.html');
-    replace_field('{{VOCAB_SIZE}}', '123');
-    replace_field('{{SIFT_METHOD}}', 'dense');
+    replace_field('{{VOCAB_SIZE}}', k);
+    replace_field('{{SIFT_METHOD}}', sift_type);
 %     replace_field('', '');
 
 %     Update the images for the airplane column
+    score = scores(1, :);
+    [~, idx] = sort(score, 'descend');
     for i=1:4
         for j=1:set_size
             pos = (i-1) * set_size + j;
@@ -24,6 +25,8 @@ function [] = fill_template(files, score, set_size)
     end
     
 %     Update the images for the cars column
+    score = scores(2, :);
+    [~, idx] = sort(score, 'descend');
     for i=1:4
         for j=1:set_size
             pos = (i-1) * set_size + j;
@@ -41,6 +44,8 @@ function [] = fill_template(files, score, set_size)
     end
     
 %     Update the images for the faces column
+    score = scores(3, :);
+    [~, idx] = sort(score, 'descend');
     for i=1:4
         for j=1:set_size
             pos = (i-1) * set_size + j;
@@ -58,6 +63,8 @@ function [] = fill_template(files, score, set_size)
     end
     
 %     Update the images for the motorbikes column
+    score = scores(4, :);
+    [~, idx] = sort(score, 'descend');
    for i=1:4
         for j=1:set_size
             pos = (i-1) * set_size + j;
@@ -74,7 +81,7 @@ function [] = fill_template(files, score, set_size)
         end
     end
     
-    fn = sprintf('%s-%s.html', 'dense', 'rgb');
+    fn = sprintf('%s-%s-%d.html', color_space, sift_type, k);
     output = fopen(fn, 'w');
     fprintf(output, file_name);
     
@@ -83,5 +90,4 @@ function [] = fill_template(files, score, set_size)
     end
 
 end
-
 

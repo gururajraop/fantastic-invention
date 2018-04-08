@@ -22,7 +22,7 @@ function [scores, mAP] = evaluation(test_files, classifiers, test_size, vocab, s
         disp(sprintf('Evaluation for class %d', class));
         class_label = double(labels==class);
         [predicted_labels, ~, class_scores] = predict(class_label, sparse(features), classifiers{class});
-        scores(class, :) = sort(class_scores);
+        scores(class, :) = class_scores;
         shift = test_size * (4-class+1);
         class_labels_shifted = circshift(class_label, shift);
         predicted_labels_shifted = circshift(predicted_labels, shift);
