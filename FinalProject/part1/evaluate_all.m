@@ -1,11 +1,12 @@
 function [] = evaluate_all()
 sift_types = ["normal", "dense"];
-color_spaces = [ "gray", ]; % "RGB", "nrgb",  "opponent"
+color_spaces = [ "gray", "RGB", "nrgb", "opponent"];
 k_values = [400, 800, 1600, 2000, 4000];
 num_images = 250;
 test_set_size = 50;
 
 [test_files, ~] = get_file_names(test_set_size, 'test');
+save(sprintf('scores/Test_files_%d_images.mat', num_images), 'test_files');
 
 for sift = sift_types
     for color = color_spaces
@@ -26,4 +27,3 @@ for sift = sift_types
     end
 end
 
-end
