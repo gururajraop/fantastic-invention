@@ -28,7 +28,6 @@ function [features] = feature_extraction(selected_files, sift_type, color_space,
     end
     
     features = double(features);
-    size(features)
 end
 
 function [new] = random_rows(matrix, n)

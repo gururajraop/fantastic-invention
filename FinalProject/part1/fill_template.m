@@ -1,12 +1,36 @@
-function [] = fill_template(files, scores, mAP, set_size, color_space, sift_type, k)
+function [] = fill_template(files, scores, mAP, set_size, color_space, sift_type, k, step, train_size, vocab_train, block)
+ 
+    map_total = sum(mAP)/4;    
+    frac = vocab_train / 1865;
 
     file_name = fileread('reports/template.html');
-    replace_field('{{VOCAB_SIZE}}', k);
-    replace_field('{{SIFT_METHOD}}', sift_type);
-%     replace_field('', '');
+    
+    if strcmp(sift_type, "dense")
+        replace_field('{{SIFT_STEP}}', step);
+        replace_field('{{SIFT_BLOCK}}', block);
+    else
+        replace_field('{{SIFT_STEP}}', '-');
+        replace_field('{{SIFT_BLOCK}}', '-');        
+    end
+    
+    replace_field('{{MAP}}', map_total);
+    
 
-%     Update the images for the airplane column
+    replace_field('{{VOCAB_SIZE}}', k);
+    replace_field('{{VOCAB_FRAC}}', frac);
+    replace_field('{{VOCAB_FRACTION}}', k);
+    replace_field('{{SIFT_METHOD}}', sift_type);
+    replace_field('{{SVM_POS}}', train_size);
+    replace_field('{{SVM_NEG}}', 3*train_size);
+    replace_field('{{SVM_KERNEL}}', 'linear');
+
+    % Update the images for the airplane column
     score = scores(1, :);
+    replace_field('{{AP_AIR}}', mAP(1));
+    replace_field('{{AP_CAR}}', mAP(2));
+    replace_field('{{AP_FACE}}', mAP(3));
+    replace_field('{{AP_BIKE}}', mAP(4));
+    
     [~, idx] = sort(score, 'descend');
     for i=1:4
         for j=1:set_size
@@ -85,7 +109,10 @@ function [] = fill_template(files, scores, mAP, set_size, color_space, sift_type
     output = fopen(fn, 'w');
     fprintf(output, file_name);
     
-    function replace_field(field, value)     
+    function replace_field(field, value)  
+        if isnumeric(value)
+            value = num2str(value);
+        end
        file_name = strrep(file_name, field,  value);
     end
 
