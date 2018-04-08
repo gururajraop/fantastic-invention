@@ -46,6 +46,6 @@ fill_template(test_files, scores, mAP, test_set_size, color_space, sift_type, k,
 % Do the same steps as above but for all settings stated in the
 % report/assignment
 
-% build_all_vocab();% 
-% train_all();% 
+% build_all_vocab();
+% train_all();
 % evaluate_all();

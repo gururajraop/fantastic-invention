@@ -11,7 +11,7 @@ for sift = sift_types
         for k = k_values
             try
                 disp(sprintf('Training for vocab: %d_images_%d_vocabsize_%s_%s', num_images, k, sift, color));
-                load(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift}, color), 'vocab');
+                load(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'vocab');
                 load(sprintf('vocab/unselected-%d_images_%s_%s.mat', num_images, sift, color), 'unselected');
                 tic
                 classifiers = train_classifier(train_set_size, unselected, vocab, sift, color);
