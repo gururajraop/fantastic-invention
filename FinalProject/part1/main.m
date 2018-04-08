@@ -14,12 +14,12 @@ close all
 % the settings as shown below are just a toy example that take only a
 % minute to complete, it is here for demonstration purpose
 
-num_images = 5;             % number of images used in vocabulary
-k = 401;                    % k value for k-means clustering
+num_images = 250;           % number of images used in vocabulary
+k = 400;                    % k value for k-means clustering
 sift_type = 'normal';       % the sift type: 'normal' 'dense'
 color_space = 'gray';       % color space to be used: 'gray' 'RGB' 'rgb' 'opponent'
-train_set_size = 2;         % Number of images to be used for each class in training the classifier
-test_set_size = 2;          % number of imates in test set per clas
+train_set_size = 50;        % Number of images to be used for each class in training the classifier
+test_set_size = 50;         % number of imates in test set per clas
 max_f = 200000;             % maximun number of features
 max_iter = 300;             % Number of iterations for kmeans
 

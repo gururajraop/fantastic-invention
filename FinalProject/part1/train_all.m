@@ -1,6 +1,6 @@
 function [] = train_all()
 sift_types = ["normal", "dense"];
-color_spaces = [ "gray", "nrgb",  "opponent"];
+color_spaces = [ "gray", "RGB", "nrgb",  "opponent"];
 k_values = [400, 800, 1600, 2000, 4000];
 num_images = 250;
 train_set_size = 50;
