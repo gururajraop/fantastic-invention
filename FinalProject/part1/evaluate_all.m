@@ -20,6 +20,7 @@ for sift = sift_types
                 toc
                 save(sprintf('scores/score_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'scores');
                 save(sprintf('scores/mAP_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'mAP');
+		fill_template(test_files, scores, mAP, test_set_size, color, sift, k);
             catch
                 warning('Error!! Evaluating vocab classifier_%d_images_%d_vocabsize_%s_%s', num_images, k, sift, color);
             end

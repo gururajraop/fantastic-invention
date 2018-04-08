@@ -29,8 +29,9 @@ close all
 % save('classifiers/classifiers.mat', 'classifiers');
 
 % Evaluation
-% [files, ~] = get_file_names(test_size, 'test');
-% [scores, mAP] = evaluation(files, classifiers, test_size, vocab, sift_type, color_space)
+% [test_files, ~] = get_file_names(test_set_size, 'test');
+% save(sprintf('scores/Test_files_%d_images.mat', num_images), 'test_files');
+% [scores, mAP] = evaluation(test_files, classifiers, test_size, vocab, sift_type, color_space)
 % save(sprintf('scores/score_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'scores');
 % save(sprintf('scores/mAP_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'mAP');
                             
