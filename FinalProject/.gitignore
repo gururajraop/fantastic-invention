@@ -1,6 +1,8 @@
 part1/Caltech4/
 part1/*.asv
 part2/*
+!part2/data/
+part2/data/Caltech4
 !part2/tsne/
 !part2/*.m
 .DS_Store
