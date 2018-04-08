@@ -15,7 +15,7 @@ for b=[50, 100]
         BATCH_SIZE = b;
         EPOCH = e;
 
-        [net, info, ~] = finetune_cnn();   
+        [net, info, ~] = finetune_cnn();  
 
         fn = sprintf('net-epoch-%d.mat', EPOCH);
         expdir = sprintf('./data/cnn_assignment-lenet-epoch-%d-batch-%d', EPOCH, BATCH_SIZE);

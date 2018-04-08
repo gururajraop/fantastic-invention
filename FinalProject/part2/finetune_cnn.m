@@ -124,6 +124,7 @@ for count=counts_test
     class = class + 1;
 end
 
+% create a vector of 1s (for the training images) and 2s for test images
 sets = zeros(sum(counts_train) + sum(counts_test), 1);
 sets(1:sum(counts_train), :) = ones([sum(counts_train), 1]);
 sets(sum(counts_train)+1:end) = repmat(2, [sum(counts_test), 1]);
