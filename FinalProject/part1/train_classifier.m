@@ -1,4 +1,4 @@
-function [classifier] = train_classifier(class_id, n, train_files, vocab, sift_type, color_space)
+function [classifier] = train_classifier(n, train_files, vocab, sift_type, color_space)
     
     features = zeros(n*4, size(vocab, 1));
     labels = zeros(n*4, 1);

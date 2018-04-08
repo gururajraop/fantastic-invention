@@ -1,53 +1,43 @@
+%% Setup
 clear
 clc
 close all
 
-%% User defined parameters
-num_images = 250;           % number of images used in vocabulary
-k = 400;                    % k value for k-means clustering
-sift_type = 'normal';        % the sift type
-                            % 'normal' 'dense'
-color_space = 'RGB';       % color space to be used
-                            % 'gray' 'RGB' 'rgb' 'opponent'
-train_set_size = 50;        % Number of images to be used for each class in
-                            % training the classifier
-                            
-%% Build all types of vocabulary and save them
-% build_all_vocab();
+% Uncomment one of the sections below, the first sections
+% perfoms all steps (extracting features, building vocab, training classifier
+% evaluation on test set and creating a report) for a specific given setting.
+% The second part does the same thing but for all combination of settings
+% as requested in the assignement.
 
-%% Read the input images and process them for various setup
-% [file_names, remaining] = get_file_names(num_images);
+%% Perform all steps for just one single setting:
+% num_images = 250;           % number of images used in vocabulary
+% k = 400;                    % k value for k-means clustering
+% sift_type = 'normal';       % the sift type: 'normal' 'dense'
+% color_space = 'RGB';        % color space to be used: 'gray' 'RGB' 'rgb' 'opponent'
+% train_set_size = 50;        % Number of images to be used for each class in training the classifier
+% test_size = 50;
 
-%% Feature extraction and description
-% features = feature_extraction(file_names, sift_type, color_space);
+% [file_names, unselected] = get_file_names(num_images, 'train');
+% save(sprintf('vocab/unselected-%d_images_%s_%s.mat', num_images, sift, color), 'unselected');
+% save(sprintf('vocab/selected-%d_images_%s_%s.mat', num_images, sift, color), 'file_names');
+% features = feature_extraction(file_names, sift, color, max_f);
+% vocab = build_visual_vocab(features, k, max_iter, true);
+% save(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'vocab');
 
-%% Build visual vocabulory
-% vocab = build_visual_vocab(features, k);
-
-%% Image representation
-% representation();
-
-%% Train the SVM for all vocab types
-% train_all();
-
-%% Classification
-% load(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_type, color_space), 'vocab');
-% load(sprintf('vocab/unselected-%d_images_%s_%s.mat', num_images, sift_type, color_space), 'unselected');
+% Classification
 % classifiers = classification(unselected, vocab, sift_type, color_space, train_set_size);
 % save('classifiers/classifiers.mat', 'classifiers');
 
-%% Evaluate all the trained models
-evaluate_all();
-
-%% Evaluation
-% test_size = 50;
+% Evaluation
 % [files, ~] = get_file_names(test_size, 'test');
-% load(sprintf('vocab/%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_type, color_space), 'vocab');
-% load(sprintf('classifiers/classifier_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift_type, color_space), 'classifiers');
-% scores = evaluation(files, classifiers, test_size, vocab, sift_type, color_space)
+% [scores, mAP] = evaluation(files, classifiers, test_size, vocab, sift_type, color_space)
+% save(sprintf('scores/score_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'scores');
+% save(sprintf('scores/mAP_%d_images_%d_vocabsize_%s_%s.mat', num_images, k, sift, color), 'mAP');
+                            
+%% Do the same steps as above but for all settings
+% build_all_vocab();
 
-%% Sort using scores
-% test_size = 50;
-% score = rand(4*test_size, 1);
-% [files, ~] = get_file_names(test_size, 'test');
-% fill_template(files, score, test_size);
+% train_all();
+
+% evaluate_all();
+
